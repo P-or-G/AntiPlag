@@ -2,8 +2,7 @@ import sys, math
 
 from PyQt5 import uic  # Импортируем uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDoubleSpinBox, QProgressBar
-from PyQt5.QtWidgets import QTextBrowser
-
+from PyQt5.QtWidgets import QTextBrowser, QStatusBar
 
 
 class MyWidget(QMainWindow):
@@ -11,15 +10,10 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('plagiat.ui', self)  # Загружаем дизайн
         self.pushButton.clicked.connect(self.run)
-        self.doubleSpinBox.valueChanged.connect(self.ch)
-        self.m = self.doubleSpinBox.value()
-        # Обратите внимание: имя элемента такое же как в QTDesigner
-
-    def ch(self):
-        self.m = self.doubleSpinBox.value()
-        print(self.m)
+        self.doubleSpinBox.valueChanged.connect(self.run)
 
     def run(self):
+        m = self.doubleSpinBox.value()
         eq = 0
         text = self.plainTextEdit.toPlainText().split('\n')
         text2 = self.plainTextEdit_2.toPlainText().split('\n')
@@ -36,12 +30,27 @@ class MyWidget(QMainWindow):
         if lt > lt2:
             per = eq / lt * 100
         else:
-            per = 100 - (eq / lt2 * 100)
-        if per >= self.m:
-            per = round(per)
-            self.progressBar.setValue(per)
+            per = eq / lt2 * 100
+        if m < round(per, 2):
+            self.statusBar().showMessage(f'Ваш код похож на {str(per)}%')
+            self.statusBar().setStyleSheet("""
+        QWidget {
+            background-color: rgb(255, 0, 0);
+            }
+        """)
         else:
-            pass
+            self.statusBar().showMessage(f'Ваш код похож на {str(per)}%')
+            self.statusBar().setStyleSheet("""
+            QWidget {
+                background-color: rgb(0, 255, 0);
+                }
+            """)
+        m = 0
+        eq = 0
+        text = 0
+        text2 = 0
+        lt = 0
+        lt2 = 0
 
 
 if __name__ == '__main__':
