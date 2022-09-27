@@ -20,7 +20,7 @@
       <x>19</x>
       <y>490</y>
       <width>751</width>
-      <height>61</height>
+      <height>41</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -28,13 +28,6 @@
       <widget class="QPushButton" name="pushButton">
        <property name="text">
         <string>Сравнить</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QProgressBar" name="progressBar">
-       <property name="value">
-        <number>0</number>
        </property>
       </widget>
      </item>
@@ -121,7 +114,11 @@
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
